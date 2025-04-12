@@ -1,0 +1,130 @@
+@model  PiranhaCMS.PublicWeb.Models.ViewModels.ServicesArchivePageViewModel
+@{
+
+    ViewData["Title"] = !string.IsNullOrEmpty(Model.CurrentPage.MetaTitle) ? Model.CurrentPage.MetaTitle :
+
+    Model.CurrentPage.Title;
+    var hasImage = Model.CurrentPage.PrimaryImage.HasValue;
+    var numposts = Model.CurrentPage.Archive.Posts.Count;
+    Func<string> newsLink = () =>
+    {
+    return Model.CurrentPage.Permalink
+    + (Model.CurrentPage.Archive.Category != null ? $"/category/{Model.CurrentPage.Archive.Category.Slug}" : "")
+    + (Model.CurrentPage.Archive.Year.HasValue ? $"/{Model.CurrentPage.Archive.Year}" : "")
+    + (Model.CurrentPage.Archive.Month.HasValue ? $"/{Model.CurrentPage.Archive.Month}" : "");
+    };
+
+       
+}
+
+@{
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+    var SiteLanguage = await WebApp.Api.Languages.GetByIdAsync(site.LanguageId);
+}
+@section head {
+    @WebApp.MetaTags(Model.CurrentPage)
+}
+
+<!-- Page Title -->
+<section class="page-title"  style="background-image:url(@Url.Content(Model.CurrentPage.PrimaryImage));">
+    <div class="auto-container">
+        @Html.Partial("Partial/_BreadCrumb", WebApp.PageId)
+        <h1>@Model.CurrentPage.Title</h1>
+    </div>
+</section>
+<!-- End Page Title -->
+
+   <!-- SECTION CONTENT START -->
+            <div class="section-full p-t80 p-b50">
+                <div class="auto-container">
+                    <div class="section-content">
+
+                        <div class="row d-flex justify-content-center">
+                        
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 m-b30">                       
+                             @for (var n = 0; n < numposts; n += 4)
+                            {
+                                <div class="row">
+                                @for (var i = n; i < Math.Min(numposts, n + 4); i++)
+                                {
+                                    var post = Model.CurrentPage.Archive.Posts[i];
+                                    var mypost1 = await WebApp.Api.Posts.GetByIdAsync(post.Id);
+                                    <!-- COLUMNS 1 -->
+                                    <div class=" @(i == 0 ? "col-md-4 col-lg-3 m-b30" : " col-md-4 col-lg-3 m-b30")">
+                                        <div class="wt-box wt-product-box block-shadow  overflow-hide">
+                                            <div class="wt-thum-bx wt-img-overlay1 wt-img-effect zoom">
+                                                <img src="@Url.Content(post.PrimaryImage)" alt="">
+                                                <div class="overlay-bx">
+                                                    <div class="overlay-icon">
+                                                        <a href="javascript:void(0);">
+                                                            <i class="fa fa-cart-plus wt-icon-box-xs"></i>
+                                                        </a>
+                                                        <a class="mfp-link" href="javascript:void(0);">
+                                                            <i class="fa fa-heart wt-icon-box-xs"></i>
+                                                        </a>
+                                                  </div>
+                                            </div>
+                                        </div>
+                                        <div class="wt-info  text-center">
+                                            <div class="p-a20 bg-white">
+                                                    <h3 class="wt-title site-text-secondry ">
+                                                        <a  class="site-text-secondry " href="@post.Permalink">@mypost1.Title</a>
+                                                    </h3>
+                                                    <span class="price">
+                                                        <ins>
+                                                            <span><span class="Price-currencySymbol"> @mypost1.Category.Title
+                                                    </span>
+                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                }                                 
+                                </div>
+                              }   
+                            </div>
+                          
+                          
+                    </div>
+                </div>
+            </div>
+             <!-- SECTION CONTENT END -->
+@foreach (var block in Model.CurrentPage.Blocks)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+    <div class="block @block.CssName()">
+        <div class="container">
+            @Html.DisplayFor(m => block, block.GetType().Name)
+        </div>
+    </div>
+
+}

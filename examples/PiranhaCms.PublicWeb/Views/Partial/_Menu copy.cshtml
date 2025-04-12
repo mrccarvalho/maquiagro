@@ -1,0 +1,39 @@
+@model PiranhaCMS.PublicWeb.Models.ViewModels.Base.IPageViewModel<PiranhaCMS.ContentTypes.Pages.Base.IPage>
+@{
+
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+    var SiteLanguage = await WebApp.Api.Languages.GetByIdAsync(site.LanguageId);
+    var AllLanguages = await WebApp.Api.Languages.GetAllAsync();
+    var sitemaplanguage = await  WebApp.Api.Sites.GetSitemapAsync(WebApp.Site.Id);
+}
+<!-- Start Navigation Menu -->
+<nav role="navigation" aria-label="Navegação Principal" >
+    <ul id=""  class="vertical medium-horizontal dropdown menu" data-disable-hover="true" data-autoclose='true' data-click-open='true' data-responsive-menu="accordion medium-dropdown"   data-submenu-toggle="true"   >
+        @foreach (var item in WebApp.Site.Sitemap)
+        {
+            if (!item.IsHidden)
+            {
+                if (item.Items.Count == 0)
+                {
+                    <li><a  href="@item.Permalink">@item.MenuTitle</a></li>
+                }
+                if (item.Items.Count >= 1)
+                {
+                    <li>
+                        <a  href="@item.Permalink">@item.MenuTitle</a>
+                        <ul class="vertical menu nested" >
+                            @foreach (var subitem in item.Items)
+                            {
+                                <a href="@subitem.Permalink">@subitem.MenuTitle</a>
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+        }
+    </ul>
+
+</nav>
+
+
+<!-- End Navigation Menu -->

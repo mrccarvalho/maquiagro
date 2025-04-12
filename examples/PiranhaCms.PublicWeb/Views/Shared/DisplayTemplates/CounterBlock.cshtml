@@ -1,0 +1,39 @@
+@model PiranhaCMS.ContentTypes.Blocks.CounterBlock
+@using PiranhaCMS.ContentTypes.Content
+@using PiranhaCMS.ContentTypes.Regions
+
+@{
+	var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+	var counter = await WebApp.Api.Content.GetByIdAsync<StandardCounter>(Model.Body.Id.Value, site.LanguageId);
+}
+
+<!-- Counter Section -->
+<section class="counter-section @Model.CssClass.Value">
+	<div class="auto-container">
+		<!-- Sec Title Three -->
+		<div class="sec-title centered">
+				<div class="big-text">@Model.Title</div>
+			<div class="title">@Model.Subtitle</div>
+			<h2>@Model.Title</h2>
+		</div>
+		<div class="row clearfix">
+			@foreach (var item in counter.Counters)
+			{
+				<!-- Counter Column -->
+				<div class="counter-column col-lg-4 col-md-6 col-sm-12">
+					<div class="inner-column">
+						<div class="icon-box">
+							<span class="icon @item.GetCssClass()"></span>
+						</div>
+						<h3><span class="odometer" data-count="@item.Number"></span>+</h3>
+						<div class="counter-text">@item.Title</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</section>
+<!-- End Counter Section -->
+
+
+

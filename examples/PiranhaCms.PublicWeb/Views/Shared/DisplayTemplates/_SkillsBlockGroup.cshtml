@@ -1,0 +1,50 @@
+﻿<!--model MvcWeb.Models.Blocks.SkillsBlockGroup -->
+
+
+
+<!-- Skill Section -->
+<section class="skill-section">
+    <div class="image-layer" style="background-image:url(@Url.Content(Model.Picture2))"></div>
+    <div class="auto-container">
+        <div class="row clearfix">
+
+            <!-- Video Column -->
+            <div class="video-column col-lg-6 col-md-12 col-sm-12">
+                <div class="inner-column">
+                    <!-- Video Box -->
+                    <div class="video-box">
+                        <figure class="video-image">
+                            <img class="transition-500ms" src="@Url.Content(Model.Picture)" alt="">
+                        </figure>
+                        <a href="https://www.youtube.com/watch?v=kxPCFljwJws" class="lightbox-video overlay-box"><span
+                                class="flaticon-media-play-symbol transition-900ms"><i class="ripple"></i></span></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Column -->
+            <div class="skill-column col-lg-6 col-md-12 col-sm-12">
+                <div class="inner-column">
+                    <!-- Sec Title Three -->
+                    <div class="sec-title-three light">
+                        <div class="title">@Model.SubTitle</div>
+                        <h2>@Model.Title</h2>
+                        <div class="text">@Html.Raw(Model.Description)</div>
+                    </div>
+                    <!-- Skills -->
+                    <div class="skills">
+
+                        @if (Model.Items != null && Model.Items.Count > 0)
+                        {
+                            foreach (var item in Model.Items)
+                            {
+                                <partial name="SkillsBlock.cshtml" model="@item" />
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Skill Section -->

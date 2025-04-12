@@ -1,0 +1,80 @@
+@model PiranhaCMS.PublicWeb.Models.ViewModels.StartPageViewModel
+@using PiranhaCMS.ContentTypes.Content
+
+@{
+	ViewBag.Title = Model.CurrentPage.Title;
+}
+
+<!-- Main Slider Two -->
+<section class="main-slider-three">
+	<div class="client-testimonial-carousel owl-carousel owl-theme">
+
+		@foreach (var item in Model.CurrentPage.GenericSliderItems)
+		{
+			<!-- Slide 01 -->
+			<div class="slide">
+				<div class="image-layer" style="background-image:url(@Url.Content(item.PrimaryImage)"></div>
+				<div class="pattern-layer" style="background-image:url()"></div>
+				<div class="auto-container">
+					<div class="row clearfix">
+						<!-- Content Column -->
+						<div class="content-column col-lg-6 col-md-12 col-sm-12">
+							<div class="inner-column">
+								<div class="title">@item.SubTitle</div>
+								<h1>@item.Title <br> @item.Title2 <span> @item.Title3</span></h1>
+								<div class="text">@item.Description </div>
+								<div class="button-box">
+									<a href="@item.PageLink.Page.Permalink" class="theme-btn btn-style-five clearfix">
+										<span class="btn-wrap">
+											<span class="text-one">Saber mais</span>
+											<span class="text-two">Saber mais</span>
+										</span>
+										<span class="plus fa-plus"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<!-- Image Column -->
+						@if (item.ImageBanner.Media != null)
+						{
+							<div class="image-column col-lg-6 col-md-12 col-sm-12">
+								<div class="inner-column">
+									<div class="image">
+
+										<img src="@Url.Content(item.ImageBanner)" class="w-100" alt="" />
+
+									</div>
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+			<!-- End Slide 01 -->
+		}
+	</div>
+
+	<!-- Product Thumbs Carousel -->
+	<div class="client-thumb-outer">
+		<div class="client-thumbs-carousel owl-carousel owl-theme">
+
+			@foreach (var item in Model.CurrentPage.GenericSliderItems)
+			{
+				<div class="thumb-item">
+					<figure class="thumb-box"><img src="@Url.Content(item.PrimaryImage)" alt=""></figure>
+				</div>
+			}
+		</div>
+	</div>
+	<!-- Social Box -->
+	<ul class="social-box">
+		<li><a href="#" class="fa fa-facebook"> <span>Facebook</span></a></li>
+		<li><a href="#" class="fa fa-twitter"> <span>Twitter</span></a></li>
+		<li><a href="#" class="fa fa-instagram"> <span>Instagram</span></a></li>
+	</ul>
+</section>
+<!-- End Main Slider Section -->
+
+
+@Html.DisplayFor(m => m.CurrentPage.Blocks)

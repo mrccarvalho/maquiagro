@@ -1,0 +1,66 @@
+@model PiranhaCMS.ContentTypes.Blocks.WelcomeBlock
+@using PiranhaCMS.ContentTypes.Content
+@using PiranhaCMS.ContentTypes.Regions
+
+
+
+@{
+	var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+	var welcome = await WebApp.Api.Content.GetByIdAsync<StandardWelcome>(Model.Body.Id.Value, site.LanguageId);
+}
+
+
+<!-- ABOUT SECTION START -->
+<section class="welcome2-section">
+        <div class="auto-container">
+            <div class="row clearfix">
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="img-colarge">
+                        <div class="colarge-1"><img src="@Url.Content(welcome.welcome.Imagem)" alt="" class="slide-righ"></div>
+                        <div class="since-year-outer">
+                            <div class="since-year"><span>@welcome.welcome.Since</span><strong>@welcome.welcome.Year</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="">
+                        <!-- TITLE START-->
+                        <!-- Sec Title Three -->
+                    <div class="sec-title-three dark">
+                        <div class="title">@Model.SubTitle <span>@Model.SubTitle2</span></div>
+                        <h2>@Model.Title</h2>
+                 
+                    </div>
+                        <!-- TITLE END-->
+                        <ul class="site-list-style-one">
+
+                            @Html.Raw(welcome.welcome.Topics)
+                        </ul>
+
+                        <p>     @Html.Raw(welcome.welcome.Description)</p>
+
+                        <div class="welcom-to-section-bottom d-flex justify-content-between">
+                            <div class="welcom-btn-position"><!-- Btn Box -->
+                                <div class="btn-box">
+                                    <a href="@(welcome.welcome.PageLink != null && welcome.welcome.PageLink.HasValue ? Url.Content(welcome.welcome.PageLink.Page.Permalink) : '/' )"  class="theme-btn btn-style-six clearfix">
+                                        <span class="btn-wrap">
+                                            <span class="text-one">Saber mais</span>
+                                            <span class="text-two">Saber mais</span>
+                                        </span>
+                                        <span class="plus fa-plus"></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="welcom-sign-pic"><img src="images/sign.png" alt=""></div>
+                            <div class="welcom-sign-info"><strong>@welcome.welcome.Founder</strong><span>( @welcome.welcome.FounderText )</span></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+</section>
+<!-- ABOUT SECTION  SECTION END -->
+

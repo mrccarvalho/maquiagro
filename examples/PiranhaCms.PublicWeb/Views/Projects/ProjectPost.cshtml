@@ -1,0 +1,176 @@
+@model  PiranhaCMS.PublicWeb.Models.ViewModels.ProjectPostPageViewModel
+@{
+    ViewData["Title"] = !string.IsNullOrEmpty(Model.CurrentPage.MetaTitle) ? Model.CurrentPage.MetaTitle :
+
+    Model.CurrentPage.Title;
+
+    var hasImage = Model.CurrentPage.PrimaryImage.HasValue;
+    var archive = await WebApp.Api.Pages.GetByIdAsync(Model.CurrentPage.BlogId);
+    var categories = await WebApp.Api.Posts.GetAllCategoriesAsync(Model.CurrentPage.BlogId);
+    var posts = await WebApp.Api.Posts.GetAllAsync<Piranha.Models.PostBase>(Model.CurrentPage.BlogId);
+
+        var numPosts = posts.Count();
+
+        
+}
+
+@section head {
+    @WebApp.MetaTags(Model.CurrentPage)
+}
+
+<!-- Page Title -->
+<section class="page-title" style="background-image:url(@Url.Content(Model.CurrentPage.PageHeader.TopImage));">
+    <div class="auto-container">
+        @Html.Partial("Partial/_BreadCrumb", WebApp.PageId)
+        <h1>@Model.CurrentPage.Title</h1>
+    </div>
+</section>
+
+<!-- Sidebar Page Container -->
+<div class="sidebar-page-container">
+    <div class="pattern-layer" style="background-image:url(../assets/images/background/pattern-25.png)"></div>
+    <div class="auto-container">
+        <div class="row clearfix">
+
+            <!-- Content Side -->
+            <div class="content-side col-lg-8 col-md-12 col-sm-12">
+                <!-- News Detail -->
+                <div class="news-detail">
+                    <div class="inner-box">
+                        <div class="image">
+                            @if (hasImage)
+
+                            {
+                                <img
+                                    src="@Url.Content(WebApp.Media.ResizeImage(Model.CurrentPage.PrimaryImage, 871, 398))" />
+                            }
+                        </div>
+                        <div class="lower-content">
+                            <ul class="post-info">
+                                <li>@Model.CurrentPage.Category.Title</li>
+                                <li><span class="icon flaticon-calendar"></span>@Model.CurrentPage.Published.Value.ToString("yyyy"), @Model.CurrentPage.Published.Value.ToString("dd") de  @Model.CurrentPage.Published.Value.ToString("MMMM") </li>
+                                <li><span class="icon flaticon-user-2"></span>340 Views</li>
+        
+                            </ul>
+                            <h2>@Model.CurrentPage.Title</h2>
+                     
+                           
+                          
+                            <p>Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt
+                                Ut Labore Et Dolore Magna Aliqua. Quis Ipsum Suspendisse Ultrices Gravida. Risus Commodo
+                                Viverra Maecenas Accumsan Lacus Facilisis. Lorem Ipsum Dolor Sit Amet, Consectetur
+                                Adipiscing Elit, Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Quis
+                                Ipsum Suspendisse Ultrices Gravida. Risus Commodo Viverra Maecenas Accumsan Lacus
+                                Facilisis. Lorem Ipsum Dolor Sit Amet, Consectetur Adipiscing Elit, Sed Do Eiusmod
+                                Tempor Incididunt Ut Labore Et Dolore Magna Aliqua. Quis Ipsum Suspendisse Ultrices
+                                Gravida. Risus Commodo Viverra Maecenas Accumsan Lacus Facili</p>
+
+                            <h4>Strategy For Providing Latest Service</h4>
+                            <p>This is no anecdotal pilot shortage, either—the same problems are found on a global
+                                scale, with Boeing estimating an incredible shortage of 790,000 or more pilots across
+                                the world over the next two decades. In the shorter term, the domestic industry can
+                                expect more than <span>8,000 unfilled vacancies per year by 2021,</span> and five years
+                                later that number could be higher than 12,000 pilot-less flights in need of help. This
+                                spells trouble for your supply chain because even if you don’t personally rely on flight
+                                to get items delivered, chances are at least one of your key suppliers does.</p>
+                            <div class="bold-text">After a 2009 Colgan Air crash, the US Federal Aviation Administration
+                                raised the requirements for an ATP certificate from 250 hours to a whopping 1,500 hours
+                                of training.</div>
+                        </div>
+
+                        <!-- Post Share Options-->
+                        <div class="post-share-options">
+                            <div class="post-share-inner clearfix">
+                                <div class="tags"><span class="tags">Tags:</span>
+                                 @foreach (var tag in Model.CurrentPage.Tags)
+                                                    {
+                                                        <a href="@Model.CurrentPage.Permalink/tag/@tag.Slug">@tag.Slug</a>
+                                                    }</div>
+                                <ul class="social-box">
+                                    <span class="share">Share Article</span>
+                                    <li><a href="#"><span class="fa fa-facebook"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- End Post Share Options-->
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Sidebar Side -->
+            <div class="sidebar-side col-lg-4 col-md-12 col-sm-12">
+                <aside class="sidebar padding-left sticky-top">
+
+                   <!-- Service Widget -->
+                    <div class="sidebar-widget service-widget">
+                        <div class="widget-content">
+                            <div class="sidebar-title-two">
+                                <h4>Categories</h4>
+                            </div>
+                            <ul class="service-list-two">
+                                @foreach (var category in categories)
+                                    {
+                                       <li> <a href="category/@category.Slug">@category.Title  <span>3</span></a></li>
+                                    }   
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Popular Posts -->
+                    <div class="sidebar-widget popular-posts">
+                        <div class="widget-content">
+                            <div class="sidebar-title-two">
+                                <h4>Latest Post</h4>
+                            </div>
+                            @{var i = 1;}
+                             @foreach (var post in posts)
+                             {
+                                if (i <= 3)
+                                {
+                                    <article class="post">
+                                <figure class="post-thumb"><img src="@Url.Content(post.PrimaryImage)" alt=""><a
+                                        href="@post.Permalink" class="overlay-box"><span
+                                            class="fa fa-calendar"></span></a></figure>
+                                <div class="text"><a href="@post.Permalink">@post.Title...</a>
+                                </div>
+                                <div class="post-info">@post.Published.Value.ToString("yyyy"), @post.Published.Value.ToString("dd") de  @post.Published.Value.ToString("MMMM") </div>
+                            </article>
+                                    i++;                  
+                               }  }
+                        </div>
+                    </div>
+
+                    
+                    <!-- Tag Widget -->
+                    <div class="sidebar-widget popular-tags">
+                        <div class="widget-content">
+                            <div class="sidebar-title-two">
+                                <h4>Tag</h4>
+                            </div>
+                             @foreach (var tag in Model.CurrentPage.Tags)
+                                                    {
+                                                        <a href="tag/@tag.Slug">@tag.Title</a>
+                                                    }   
+                  
+                        </div>
+                    </div>
+
+                </aside>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@foreach (var block in Model.CurrentPage.Blocks)
+{
+    <div class="block @block.CssName()">
+        <div class="grid-container">
+            @Html.DisplayFor(m => block, block.GetType().Name)
+        </div>
+    </div>
+}
+

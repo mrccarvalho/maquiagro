@@ -1,0 +1,75 @@
+﻿@model PiranhaCMS.ContentTypes.Blocks.SkillsBlock
+@using PiranhaCMS.ContentTypes.Content
+
+@{
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+
+    var skill = await WebApp.Api.Content.GetByIdAsync<StandardSkill>(Model.Body.Id.Value, site.LanguageId);
+}
+
+<!-- Skill Section -->
+<section class="skill-section">
+    <div class="image-layer" style="background-image:url(@Url.Content(skill.Intro.Picture2))"></div>
+    <div class="auto-container">
+        <div class="row clearfix">
+
+            <!-- Video Column -->
+            <div class="video-column col-lg-6 col-md-12 col-sm-12">
+                <div class="inner-column">
+                    <!-- Video Box -->
+                    <div class="video-box">
+                        <figure class="video-image">
+                            <img class="transition-500ms" src="@Url.Content(skill.Intro.Picture)" alt="">
+                        </figure>
+                        <a href="https://www.youtube.com/watch?v=kxPCFljwJws" class="lightbox-video overlay-box"><span
+                                class="flaticon-media-play-symbol transition-900ms"><i class="ripple"></i></span></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Column -->
+            <div class="skill-column col-lg-6 col-md-12 col-sm-12">
+                <div class="inner-column">
+                    <!-- Sec Title Three -->
+                    <div class="sec-title-three light">
+                        	<div class="big-text">@Model.Title</div>
+                        <div class="title">@Model.SubTitle</div>
+                        <h2>@Model.Title</h2>
+                        <div class="text">@Html.Raw(skill.Intro.Description)</div>
+                    </div>
+                    <!-- Skills -->
+                    <div class="skills">
+
+
+                        @foreach (var item in skill.Skills)
+
+                        {
+                            <!-- Skill Item -->
+                            <div class="skill-item">
+                                <div class="skill-header clearfix">
+                                    <div class="skill-title">@item.Skill</div>
+                                </div>
+                                <div class="skill-bar">
+                                    <div class="bar-inner">
+                                        <div class="bar progress-line" data-width="@item.Percent">
+                                            <div class="skill-percentage">
+                                                <div class="count-box"><span class="count-text" data-speed="2000"
+                                                        data-stop="@item.Percent">0</span>%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Skill Section -->

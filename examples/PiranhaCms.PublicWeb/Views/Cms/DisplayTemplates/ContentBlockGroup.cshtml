@@ -1,0 +1,41 @@
+﻿@model PiranhaCMS.ContentTypes.Blocks.ContentBlockGroup
+
+
+
+@{
+
+
+	<!-- Organising Institutions Section -->
+	<section class="institution ">
+		<div class="grid-container grid-container-padded inner-padding">
+			<div class="grid-x grid-padding-x">
+				<div class="cell">
+					<header class="section-head">
+						<h3 class="section-title text-center separator-center">
+							@Model.Heading
+						</h3><!-- /.section-title -->
+						
+						<div class="section-head-actions text-center">
+							
+						</div><!-- /.section-head-actions -->
+					</header><!-- /.section-head -->
+					
+					<div class="grid-x grid-margin-x">
+
+					<div class="owl-carousel owl-carousel-institution owl-theme">
+                @if (Model.Items != null && Model.Items.Count > 0)
+            {
+                foreach (var item in Model.Items)
+                {
+					<partial name="InstittutionsBlock.cshtml" model="@item" />
+
+                }
+                
+                }        
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+}

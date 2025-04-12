@@ -1,0 +1,59 @@
+@model PiranhaCMS.PublicWeb.Models.ViewModels.Base.IPageViewModel<PiranhaCMS.ContentTypes.Pages.Base.IPage>
+@{
+
+
+
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+
+    var SiteLanguage = await WebApp.Api.Languages.GetByIdAsync(site.LanguageId);
+
+    var AllLanguages = await WebApp.Api.Languages.GetAllAsync();
+}
+
+<!-- for use with <use> -->
+<svg xmlns="http://www.w3.org/2000/svg" hidden>
+    <symbol id="arrow" viewbox="0 0 16 16">
+        <polyline points="4 6, 8 10, 12 6" stroke="#000" stroke-width="2" fill="transparent" stroke-linecap="round" />
+    </symbol>
+</svg>
+<!-- Start Navigation Menu -->
+<nav id="site-navigation" class="site-navigation" aria-label="Clickable Menu Demonstration">
+    <ul class="clicky-menu no-js">
+        @foreach (var item in WebApp.Site.Sitemap)
+        {
+            if (!item.IsHidden)
+            {
+                if (item.Items.Count == 0)
+                {
+                    <li><a href="@item.Permalink">@item.MenuTitle</a></li>
+
+                }
+
+                if (item.Items.Count >= 1)
+
+                {
+                    <li>
+                        <a href="#">
+                            @item.MenuTitle
+                            <svg aria-hidden="true" width="16" height="16">
+                                <use xlink:href="#arrow" />
+                            </svg>
+                        </a>
+                        <ul>
+                            @foreach (var subitem in item.Items)
+
+                            {
+                                <li> <a href="@subitem.Permalink">@subitem.MenuTitle</a></li>
+
+                            }
+                        </ul>
+                    </li>
+
+                }
+
+            }
+
+        }
+    </ul>
+
+</nav>

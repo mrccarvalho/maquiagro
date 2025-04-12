@@ -1,0 +1,34 @@
+﻿@model PiranhaCMS.ContentTypes.Blocks.Counter2BlockGroup
+
+
+
+
+<!-- COUNTER SECTION START -->
+<section  class=" counter-two-section section-full p-t80 p-b40  overlay-wraper bg-cover bg-no-repeat" style="background-image:url(assets/images/background/bg-2.jpg);">
+	<div class="overlay-main site-bg-secondry opacity-09"></div>   
+		
+
+		<div class="auto-container">
+			<!-- Sec Title Three -->
+			<div class="sec-title-two light centered">
+				<div class="title">@Model.SubTitle</div>
+				<h2>@Model.Title</h2>
+			</div>
+			<div class="row clearfix">
+
+				 @if (Model.Items != null && Model.Items.Count > 0)
+                        {
+                            foreach (var item in Model.Items)
+                            {
+                                <partial name="Counter2Block.cshtml" model="@item" />
+                            }
+                        }
+				
+			</div>
+		</div>
+
+     
+</section>
+<!-- COUNTER SECTION  SECTION END -->
+
+

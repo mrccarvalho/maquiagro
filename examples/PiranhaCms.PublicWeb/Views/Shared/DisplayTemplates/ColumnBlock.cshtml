@@ -1,0 +1,10 @@
+@model Piranha.Extend.Blocks.ColumnBlock
+
+<div class="grid-x">
+    @for (var n = 0; n < Model.Items.Count; n++)
+    {
+        <div class="cell large-6">
+            @Html.DisplayFor(m => Model.Items[n], Model.Items[n].GetType().Name)
+        </div>
+    }
+</div>

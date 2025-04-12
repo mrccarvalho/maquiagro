@@ -1,0 +1,99 @@
+@model PiranhaCMS.PublicWeb.Models.ViewModels.NewsArchivePageViewModel
+@{
+
+    ViewData["Title"] = !string.IsNullOrEmpty(Model.CurrentPage.MetaTitle) ? Model.CurrentPage.MetaTitle :
+
+    Model.CurrentPage.Title;
+    var hasImage = Model.CurrentPage.PrimaryImage.HasValue;
+    var posts = Model.CurrentPage.Archive.Posts.Count;
+    Func<string> newsLink = () =>
+    {
+    return Model.CurrentPage.Permalink
+    + (Model.CurrentPage.Archive.Category != null ? $"/category/{Model.CurrentPage.Archive.Category.Slug}" : "")
+    + (Model.CurrentPage.Archive.Year.HasValue ? $"/{Model.CurrentPage.Archive.Year}" : "")
+    + (Model.CurrentPage.Archive.Month.HasValue ? $"/{Model.CurrentPage.Archive.Month}" : "");
+    };
+}
+
+@{
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+    var SiteLanguage = await WebApp.Api.Languages.GetByIdAsync(site.LanguageId);
+    var myposts = await WebApp.Api.Posts.GetAllAsync(Model.CurrentPage.Id);
+}
+@section head {
+    @WebApp.MetaTags(Model.CurrentPage)
+}
+
+<!-- Page Title -->
+<section class="page-title"  style="background-image:url(@Url.Content(Model.CurrentPage.PrimaryImage)">
+    <div class="auto-container">
+        @Html.Partial("Partial/_BreadCrumb", WebApp.PageId)
+        <h1>@Model.CurrentPage.Title</h1>
+    </div>
+</section>
+<!-- End Page Title -->
+
+<!-- News Section Three -->
+	<section class="news-section-three">
+		<div class="pattern-layer" style="background-image:url(assets/images/background/pattern-25.png)"></div>
+		<div class="auto-container">
+			<!-- Sec Title Three -->
+			<div class="sec-title-three">
+				<div class="clearfix">
+					<div class="pull-left">
+						<div class="title">Blog</div>
+						<h2>Let's Checkout Our All <br> Current News.</h2>
+					</div>
+					<div class="pull-right">
+						<div class="text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor <br> incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices <br> gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row clearfix">
+				
+				  @foreach (var post in myposts)
+                            {
+			
+				<!-- News Block Three -->
+				<div class="news-block-three col-lg-4 col-md-6 col-sm-12">
+					<div class="inner-box wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
+						<div class="image">
+							<a href="@post.Permalink"><img src="@Url.Content(post.PrimaryImage)" alt="" /></a>
+						</div>
+						<div class="lower-content">
+							<ul class="post-info text-center">
+								<li><span class="fa  fa-calendar-days"></span>@if (post.IsPublished)
+                                                {
+                                                <span>
+                                                    @Model.CurrentPage.Published.Value.ToString("dd")  @Model.CurrentPage.Published.Value.ToString("MMMM"), @Model.CurrentPage.Published.Value.ToString("yyyy")
+                                                </span>
+                                                } </li>
+							</ul>
+							<h4><a href="@post.Permalink">@post.Title</a></h4>
+							<a class="explore" href="@post.Permalink">Explore More <span class="flaticon-plus"></span></a>
+						</div>
+					</div>
+				</div>
+
+							}
+				
+			</div>
+		</div>
+	</section>
+	<!-- End News Section Three -->
+	
+
+
+	
+
+@foreach (var block in Model.CurrentPage.Blocks)
+
+{
+    <div class="block @block.CssName()">
+       
+            @Html.DisplayFor(m => block, block.GetType().Name)
+       
+    </div>
+
+}

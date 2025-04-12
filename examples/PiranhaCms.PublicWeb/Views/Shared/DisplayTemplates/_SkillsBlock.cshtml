@@ -1,0 +1,23 @@
+<!--model MvcWeb.Models.Blocks.SkillsBlock-->
+@using PiranhaCMS.ContentTypes.Content
+@using PiranhaCMS.ContentTypes.Regions
+
+
+
+
+<!-- Skill Item -->
+<div class="skill-item">
+    <div class="skill-header clearfix">
+        <div class="skill-title">@Model.Skill</div>
+    </div>
+    <div class="skill-bar">
+        <div class="bar-inner">
+            <div class="bar progress-line" data-width="@Model.Percent">
+                <div class="skill-percentage">
+                    <div class="count-box"><span class="count-text" data-speed="2000" data-stop="@Model.Percent">0</span>%</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

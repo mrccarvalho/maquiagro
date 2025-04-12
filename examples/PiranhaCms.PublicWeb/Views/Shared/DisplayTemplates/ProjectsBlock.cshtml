@@ -1,0 +1,114 @@
+﻿@model PiranhaCMS.ContentTypes.Blocks.ProjectsBlock
+@using PiranhaCMS.ContentTypes.Pages
+@using PiranhaCMS.ContentTypes.Regions
+
+@{
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+
+   // var archives = await WebApp.Api.Pages.GetByIdAsync(Model.Body.Id.Value);
+	    //var myposts = await WebApp.Api.Posts.GetAllAsync(archive.Id);
+
+		var archives = await WebApp.Api.Pages.GetAllAsync<MaquinasArchive>();
+				//var numArchives = archives.Count();
+				var i= 1;
+				var p= 1;
+					var pr = 0;
+}
+<!-- Project Section Three -->
+	<section class="project-section-three mb-5">
+		<div class="auto-container">
+			<!-- Sec Title Three -->
+			<div class="sec-title-three centered">
+				 	<div class="big-text">@Model.Title</div>
+				<div class="title">@Model.Title</div>
+				<h2>@Model.SubTitle</h2>
+				<div class="">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut <br> labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</div>
+			</div>
+			<div class="inner-container">
+					
+				<!-- Project Tabs -->
+				<div class="project-tab">
+
+					<div class="tab-btns-box">
+						<!--Tabs Header-->
+						<div class="tabs-header">
+							<ul class="project-tab-btns clearfix">
+							 @foreach (var archive in archives)
+                        {			string active= Model.DataSelect.Id.ToString();
+						string activeClass = "";
+
+						if( archive.Id.ToString() == active   )
+						{
+								activeClass = "active-btn";
+						}
+								<li class="p-tab-btn @(archive.Id.ToString() == active ? activeClass : activeClass)" data-tab="#p-tab-@i">
+									<span class="icon flaticon-drop-of-liquid"></span> @archive.Title
+								</li>
+								i++;
+								}
+							</ul>
+						</div>
+					</div>
+					
+					<!--Tabs Content-->  
+					<div class="p-tabs-content">
+					 @foreach (var archive in archives)
+                        {		
+						string active= Model.DataSelect.Id.ToString();
+						string activeClass = "";
+
+						if( archive.Id.ToString() == active   )
+						{
+								activeClass = "active-tab";
+						}
+						<!-- Project Tab / Active Tab -->
+						<div class="p-tab @(archive.Id.ToString() == active ? activeClass : activeClass)"   id="p-tab-@p">
+							<div class="project-carousel owl-theme owl-carousel">
+								@{
+									var myposts = await WebApp.Api.Posts.GetAllAsync(archive.Id);	
+								}
+								@foreach (var mypost in myposts)
+								{
+									
+								
+								if (pr <= 4)
+								{
+								<!-- Project Block -->
+								<div class="project-block">
+									<div class="inner-box">
+										<div class="image">
+											<img src="/assets/images/gallery/3.jpg" alt="" />
+										</div>
+										<div class="clearfix">
+											<div class="content-box">
+												<h3><a href="project-detail.html">@mypost.Title <br> </a></h3>
+												<div class="text">@mypost.Excerpt</div>
+												<div class="button-box">
+													<a href="@mypost.Permalink" class="theme-btn explore-btn">Saber mais</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								}
+								pr++;
+								}
+							</div>
+						</div>
+
+						
+						p++;
+					}
+						
+					</div>
+				</div>
+						
+				<div class="lower-box text-right">
+					
+				</div>
+				
+			</div>
+		</div>
+	</section>
+	<!-- End Project Section Three -->
+	

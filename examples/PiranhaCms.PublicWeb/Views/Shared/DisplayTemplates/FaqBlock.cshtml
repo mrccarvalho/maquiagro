@@ -1,0 +1,129 @@
+﻿@model PiranhaCMS.ContentTypes.Blocks.FaqBlock
+@using PiranhaCMS.ContentTypes.Content
+@{
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+    var faq = await WebApp.Api.Content.GetByIdAsync<StandardFaq>(Model.Body.Id.Value, site.LanguageId);
+}
+
+<!-- FAQ SECTION START -->
+<div class="section-full p-t80 p-b50 @Model.GetCssClass()">
+    <div class="auto-container">
+        <!-- TITLE START-->
+        <div class="section-head center wt-small-separator-outer text-center">
+            <div class="wt-small-separator site-text-primary">
+                <div class="sep-leaf-left"></div>
+                <div>@Model.SubTitle</div>
+                <div class="sep-leaf-right"></div>
+            </div>
+            <h2>@Model.Title</h2>
+        </div>
+        <!-- TITLE END-->
+        <div class="section-content">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-8 col-md-6 col-sm-12">
+                    <!-- Accordian Box -->
+                    <ul class="accordion-box">
+                        @foreach (var item in faq.Faqs)
+                        {
+                            <!--Block-->
+                            <li class="accordion block">
+                                <div class="acc-btn">
+                                    <div class="icon-outer"><span class="icon icon-plus fa fa-plus"></span> <span
+                                            class="icon icon-minus fa fa-minus"></span></div>@item.Title
+                                </div>
+                                <div class="acc-content">
+                                    <div class="content">
+                                        <div class="text">@Html.Raw(item.Description)</div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12">
+                    <div class="faq-sidebar">
+                        <div class="service-side-btn m-b30 site-bg-secondry p-a20 text-white">
+                            <h2 class="wt-title">Brochures</h2>
+                            <p>View our 2020 financial prospectus brochure for an easy to read guide on all of the
+                                services offer.</p>
+                            @foreach (var doc in faq.Brochures)
+                            {
+                                <div class="wt-icon-box-wraper left">
+                                    <a href="uploads/@doc.Brochure.Id-@doc.Brochure.Media.Filename" target="blank" class="btn-block  p-a15 m-tb10">
+                                        <span class="text-black m-r10"><i class="fa fa-file-pdf-o"></i></span>
+                                        <strong class="text-uppercase text-black">@doc.Title</strong>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        <div class="wt-box p-a30 need-help site-bg-primary text-white m-b30">
+                            <h2 class="m-t0">Need any help!</h2>
+                            <p>Find answers to frequently asked questions about Bizipress, contacts and general customer
+                                account information </p>
+                            <a href="contact-1.html" class="site-button-secondry site-btn-effect">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FAQ SECTION END -->
+
+<!-- Faq Form Section -->
+<div class="faq-form-section">
+    <div class="pattern-layer" style="background-image:url(images/background/pattern-25.png)"></div>
+    <div class="auto-container">
+        <!-- Sec Title -->
+        <div class="sec-title alternate centered">
+            <div class="title">Submit Question</div>
+            <h2>Needs Help? Let’s Get in Touch</h2>
+        </div>
+        <div class="inner-container">
+
+            <!-- Faq Form -->
+            <div class="faq-form">
+
+                <!-- Faq Form -->
+                <form method="post" action="blog.html">
+                    <div class="row clearfix">
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                            <input type="text" name="username" placeholder="Name" required>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                            <input type="text" name="phone" placeholder="Your Phone" required>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                            <input type="text" name="subject" placeholder="Your Subject" required>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <textarea class="" name="message" placeholder="Message"></textarea>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                            <button class="theme-btn btn-style-eight clearfix">
+                                <span class="btn-wrap">
+                                    <span class="text-one">Make An Appoinment</span>
+                                    <span class="text-two">Make An Appoinment</span>
+                                </span>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+            <!--End Comment Form -->
+
+        </div>
+    </div>
+</div>
+<!-- End Faq Form Section -->

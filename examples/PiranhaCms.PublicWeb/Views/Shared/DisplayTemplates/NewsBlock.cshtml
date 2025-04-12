@@ -1,0 +1,63 @@
+﻿@model PiranhaCMS.ContentTypes.Blocks.NewsBlock
+@using PiranhaCMS.ContentTypes.Pages
+@using PiranhaCMS.ContentTypes.Regions
+
+@{
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+
+    var archive = await WebApp.Api.Pages.GetByIdAsync(Model.NewsArchive.Id.Value);
+	    var myposts = await WebApp.Api.Posts.GetAllAsync(archive.Id);
+		
+}
+
+<!-- News Section -->
+	<section class="news-section bg-gray">
+		<div class="pattern-layer" style="background-image:url(/assets/images/background/pattern-25.png)"></div>
+		<div class="auto-container">
+			<div class="sec-title">
+				<div class="big-text">@Model.Title</div>
+				<div class="title">@Model.Title</div>
+				<h2>@Model.Description</h2>
+			</div>
+			<div class="three-item-carousel owl-carousel dark-next-prev owl-theme ">
+                  @foreach (var post in myposts)
+                {
+				//var mypost1 = await WebApp.Api.Posts.GetByIdAsync(post.Id);
+				<!-- News Detail -->
+				<div class="news-block">
+					<div class="inner-box">
+						<div class="image">
+							<div class="category">@post.Category.Title</div>
+							<img src="@Url.Content(post.PrimaryImage)" alt="" />
+							<div class="overlay-box">
+								<div class="content ">
+									<ul class="post-meta text-center">
+							
+										<li><span class="fa fa-calendar-days"></span> @Model.CurrentPage.Published.Value.ToString("dd") @Model.CurrentPage.Published.Value.ToString("MMMM"), @Model.CurrentPage.Published.Value.ToString("yyyy") <span class="theme-color"></span></li>
+									</ul>
+									<h5>@post.Title ...</h5>
+								</div>
+							</div>
+							<div class="overlay-box-two">
+								<div class="image-layer" style="background-image:url(@Url.Content(post.PrimaryImage)"></div>
+								<span class="post-date">18th <br> MAY’21</span>
+								<div class="overlay-inner">
+									<div class="overlay-content">
+										<h5><a href="@post.Permalink">@post.Title ...</a></h5>
+										<div class="text text-white">@post.Excerpt</div>
+										<a href="@post.Permalink" class="read-more">Read more <span class="flaticon-next-3"></span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+                            }
+
+
+				
+			</div>
+		</div>
+	</section>
+	<!-- End News Section -->

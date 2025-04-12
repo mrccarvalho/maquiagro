@@ -1,0 +1,21 @@
+@model Piranha.Extend.Blocks.PageBlock
+@using PiranhaCMS.ContentTypes.Regions
+
+@{
+
+    var mypage = await WebApp.Api.Pages.GetByIdAsync(Model.Body.Page.Id);
+}
+
+@if (Model.Body.Page != null)
+
+{
+    <div class="image-hover-wrapper">
+        <span class="image-hover-wrapper-banner">@Model.Body.Page.Title</span>
+        <a href="@WebApp.Url(Model)"><img
+            src="@Url.Content(WebApp.Media.ResizeImage(Model.Body.Page.PrimaryImage, 540, 540))">
+            <span class="image-hover-wrapper-reveal">
+                <p>Ver mais<br><i class="fa fa-link" aria-hidden="true"></i></p>
+            </span>
+        </a>
+    </div>
+}

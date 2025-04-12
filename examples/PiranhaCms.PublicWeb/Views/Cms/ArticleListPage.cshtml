@@ -1,0 +1,30 @@
+@model PiranhaCMS.PublicWeb.Models.ViewModels.ArticleListPageViewModel
+
+<partial name="Partial/_PageHeaderWithBreadcrumb.cshtml" model="Model.CurrentPage" />
+
+<div class="container-fluid py-6 px-5">
+    <div class="row g-5">
+        <div class="col-lg-8">
+            <div class="row g-5">
+                @if (Model.CurrentPage.PageRegion?.Heading != null)
+                {
+                    <h1 class="mb-4">
+                        @Model.CurrentPage.PageRegion.Heading
+                    </h1>
+                }
+
+                @if (Model.CurrentPage.PageRegion?.LeadText != null)
+                {
+                    <h2 class="text-primary mb-4">
+                        @Model.CurrentPage.PageRegion.LeadText
+                    </h2>
+                }
+
+                <partial name="Partial/_ArticleListItems.cshtml" model="Model.Articles" />
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <partial name="Partial/_SideBar.cshtml" />
+        </div>
+    </div>
+</div>

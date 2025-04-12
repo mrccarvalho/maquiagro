@@ -1,0 +1,12 @@
+@model PiranhaCMS.ContentTypes.Regions.LinkButton
+
+
+
+
+@if (Model.Page != null || Model.ExternalUrl != null)
+{
+    <a href="@(Model.Page != null && Model.Page.HasValue ? Url.Content(Model.Page.Page.Permalink) : Model.ExternalUrl.Value)"
+       @(Model.OpenInNewWindow ? " target='_blank'" : "")>
+        @(string.IsNullOrEmpty(Model.LinkText) && Model.Page != null && Model.Page.HasValue ? Model.Page.GetTitle() : Model.LinkText.Value)
+    </a>
+}

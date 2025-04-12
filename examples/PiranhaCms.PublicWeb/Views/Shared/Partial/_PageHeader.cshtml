@@ -1,0 +1,125 @@
+@using PiranhaCMS.PublicWeb.Models.ViewModels.Base
+@model IPageViewModel<PiranhaCMS.ContentTypes.Pages.Base.IPage>
+@using PiranhaCMS.ContentTypes.Helpers
+
+@{
+	var searchPage = PageHelpers.GetSiteSettings().SearchPageReference?.Page?.Permalink;
+
+	
+	var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+    var SiteLanguage = await WebApp.Api.Languages.GetByIdAsync(site.LanguageId);
+
+}
+
+<!-- Main Header / Header Style Three -->
+<header class="main-header header-style-three">
+
+	
+ 
+                        
+
+	<!-- Header Upper -->
+	
+	
+	<div class="header-lower">
+		
+		<div class="auto-container">
+			<div class="inner-container d-flex justify-content-between align-items-center flex-wrap clearfix">
+
+				<div class="pull-left logo-box">
+					<div class="logo"><a href="/"><img width="280" 
+								src="@Url.Content(site.Logo)" alt="Maquiagro - Máquinas Agrícolas" title="Maquiagro"></a>
+					</div>
+				</div>
+
+				<div class="nav-outer">
+					<!-- Mobile Navigation Toggler -->
+					<div class="mobile-nav-toggler"><span class="fa fa-bars "></span></div>
+					<!-- Main Menu -->
+					<nav class="main-menu navbar-expand-md">
+						<div class="navbar-header">
+							<!-- Toggle Button -->
+							<button class="navbar-toggler" type="button" data-toggle="collapse"
+								data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+								aria-expanded="false" aria-label="Toggle navigation">
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+						</div>
+
+						<div class="navbar-collapse collapse clearfix" id="navbarSupportedContent">
+							<ul class="navigation clearfix">
+								@foreach (var item in WebApp.Site.Sitemap)
+								{
+									if (!item.IsHidden)
+									{
+										if (item.Items.Count == 0)
+										{
+											<li><a href="@item.Permalink">@item.MenuTitle</a></li>
+										}
+										if (item.Items.Count >= 1)
+										{
+											<li class="dropdown">
+												<a>@item.MenuTitle</a>
+												<ul>
+													@foreach (var subitem in item.Items)
+													{
+														<li> <a href="@subitem.Permalink">@subitem.MenuTitle</a></li>
+
+													}
+												</ul>
+											</li>
+										}
+									}
+								}
+							</ul>
+						</div>
+					</nav>
+				</div>
+
+				<!-- Main Menu End-->
+				
+
+			</div>
+		</div>
+	</div>
+	<!--End Header Upper-->
+
+	<!-- Sticky Header  -->
+	<div class="sticky-header">
+		<div class="auto-container clearfix">
+			<!--Logo-->
+			<div class="logo pull-left">
+				<a href="/" title=""><img src="/assets/images/logo-small.png" alt="" title=""></a>
+			</div>
+			<!--Right Col-->
+			<div class="pull-right">
+				<!-- Main Menu -->
+				<nav class="main-menu">
+					<!--Keep This Empty / Menu will come through Javascript-->
+
+				</nav><!-- Main Menu End-->
+
+				<!-- Mobile Navigation Toggler -->
+				<div class="mobile-nav-toggler"><span class="fa fa-bars "></span></div>
+
+			</div>
+		</div>
+	</div><!-- End Sticky Menu -->
+
+	<!-- Mobile Menu  -->
+	<div class="mobile-menu">
+		<div class="menu-backdrop"></div>
+		<div class="close-btn"><span class="icon fa fa-close"></span></div>
+
+		<nav class="menu-box">
+			<div class="nav-logo"><a href="/"><img src="assets/images/logo-small.png" alt="" title=""></a></div>
+			<div class="menu-outer"><!--Here Menu Will Come Automatically Via Javascript / Same Menu as in Header-->
+			</div>
+		</nav>
+	</div><!-- End Mobile Menu -->
+
+</header>
+<!-- End Main Header -->
+

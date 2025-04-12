@@ -1,0 +1,37 @@
+/*
+ * Copyright (c) .NET Foundation and Contributors
+ *
+ * This software may be modified and distributed under the terms
+ * of the MIT license.  See the LICENSE file for details.
+ *
+ * http://github.com/tidyui/coreweb
+ *
+ */
+
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using PiranhaCMS.Models.Fields;
+using PiranhaCMS.ContentTypes.Regions;
+using PiranhaCMS.Validators.Attributes;
+using Piranha.AttributeBuilder;
+using Piranha.Extend;
+using Piranha.Extend.Fields;
+using Piranha.Extend.Fields.Settings;
+using Piranha.Models;
+
+namespace PiranhaCMS.ContentTypes.Content
+{
+    /// <summary>
+    /// .
+    /// </summary>
+    [ContentType(Title = "Faq", UsePrimaryImage = false, UseExcerpt = false)]
+
+    public class StandardFaq : Faq<StandardFaq>
+    {
+        [Region(Title = "Faq's", ListTitle = "Title", Description = "Faq's")]
+        public IList<Faq> Faqs { get; set; }
+
+        [Region(Title = "Documentos", ListTitle = "Title", Description = "Documentos")]
+        public IList<Brochures> Brochures { get; set; }
+    }
+}

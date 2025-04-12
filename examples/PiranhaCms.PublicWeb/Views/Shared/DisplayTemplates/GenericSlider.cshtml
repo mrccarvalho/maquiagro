@@ -1,0 +1,79 @@
+@model PiranhaCMS.PublicWeb.Models.ViewModels.StartPageViewModel
+
+<!-- Home Page Hero Teaser -->
+
+
+ <!-- Main Slider Two -->
+    <section class="main-slider-three">
+		<div class="client-testimonial-carousel owl-carousel owl-theme">
+
+        @foreach (var item in Model.CurrentPage.GenericSliderItems)
+        {
+           <!-- Slide 01 -->
+			<div class="slide">
+				<div class="image-layer" style="background-image:url(@Url.Content(item.PrimaryImage)"></div>
+					<div class="pattern-layer" style="background-image:url()"></div>
+				<div class="auto-container">
+					<div class="row clearfix">
+						<!-- Content Column -->
+						<div class="content-column col-lg-6 col-md-12 col-sm-12">
+							<div class="inner-column">
+								<div class="title">@item.SubTitle</div>
+								<h1>@item.Title <br>  <span></span></h1>
+								<div class="text">@item.Description </div>
+								<div class="button-box">
+									<a href="contact.html" class="theme-btn btn-style-five clearfix">
+										<span class="btn-wrap">
+											<span class="text-one">Book Now</span>
+											<span class="text-two">Book Now</span>
+										</span>
+										<span class="plus fa-plus"></span>
+									</a>
+								</div>
+							</div>
+						</div>
+						
+						<!-- Image Column -->
+						<div class="image-column col-lg-6 col-md-12 col-sm-12">
+							<div class="inner-column">
+								<div class="image">
+									<img src="images/main-slider/content-image-1.jpg" alt="" />
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<!-- End Slide 01 -->
+			
+		
+        }
+
+
+		</div>
+		
+		<!-- Product Thumbs Carousel -->
+		<div class="client-thumb-outer">
+			<div class="client-thumbs-carousel owl-carousel owl-theme">
+			
+        @foreach (var item in Model.CurrentPage.GenericSliderItems)
+        {
+            	<div class="thumb-item">
+					<figure class="thumb-box"><img src="assets/images/resource/author-3.jpg" alt=""></figure>
+				</div>
+        }
+
+
+			</div>
+		</div>
+		
+		<!-- Social Box -->
+		<ul class="social-box">
+			<li><a href="#" class="fa fa-facebook"> <span>Facebook</span></a></li>
+			<li><a href="#" class="fa fa-twitter"> <span>Twitter</span></a></li>
+			<li><a href="#" class="fa fa-instagram"> <span>Instagram</span></a></li>
+		</ul>
+    </section>
+    <!-- End Main Slider Section -->
+

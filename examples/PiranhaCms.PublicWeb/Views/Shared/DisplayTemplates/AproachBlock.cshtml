@@ -1,0 +1,78 @@
+@model PiranhaCMS.ContentTypes.Blocks.AproachBlock
+@using PiranhaCMS.ContentTypes.Content
+@using PiranhaCMS.ContentTypes.Regions
+
+
+
+@{
+	var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+	var aproach = await WebApp.Api.Content.GetByIdAsync<StandardAproach>(Model.Body.Id.Value, site.LanguageId);
+}
+
+<!-- aproach Section -->
+	<section class="aproach-section bg-gray">
+		<div class="auto-container">
+			<div class="row clearfix">
+			
+				<!-- Content Column -->
+				<div class="content-column col-lg-6 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<!-- Sec Title -->
+						<div class="sec-title ">
+							<div class="title">@Model.Subtitle</div>
+							<h2>@Model.Title</h2>
+						</div>
+						<!-- Blocks Outer -->
+						<div class="blocks-outer">
+						
+							<!-- aproach Block -->
+							<div class="aproach-block">
+								<div class="inner-box">
+									<div class="number">01</div>
+									<strong>@aproach.aproachInfo.Vision</strong>
+									@Html.Raw(aproach.aproachInfo.VisionDescription)
+								</div>
+							</div>
+							
+							<!-- aproach Block -->
+							<div class="aproach-block">
+								<div class="inner-box">
+									<div class="number">02</div>
+									<strong>@aproach.aproachInfo.Mission</strong>
+									@Html.Raw(aproach.aproachInfo.MisssionDescription)
+								</div>
+							</div>
+							
+							<!-- aproach Block -->
+							<div class="aproach-block">
+								<div class="inner-box">
+									<div class="number">03</div>
+									<strong>@aproach.aproachInfo.Value</strong>
+									@Html.Raw(aproach.aproachInfo.ValueDescription)
+								</div>
+							</div>
+							
+						</div>
+						<!-- End Blocks Outer -->
+					</div>
+				</div>
+				
+				<!-- Images Column -->
+				<div class="images-column col-lg-6 col-md-12 col-sm-12">
+					<div class="inner-column">
+						<div class="image wow fadeInLeft" data-wow-delay="0ms" data-wow-duration="1500ms">
+							<img src="@Url.Content(aproach.aproachInfo.Imagem1)" alt="" />
+						</div>
+						<div class="image wow fadeInUp" data-wow-delay="0ms" data-wow-duration="1500ms">
+							<img src="@Url.Content(aproach.aproachInfo.Imagem2)" alt="" />
+						</div>
+						<div class="image-two wow fadeInRight" data-wow-delay="0ms" data-wow-duration="1500ms">
+							<img src="@Url.Content(aproach.aproachInfo.Imagem3)" alt="" />
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+	<!-- End aproach Section -->

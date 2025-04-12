@@ -1,0 +1,84 @@
+.navbar-brand {
+  background: url(../images/logo-admin.png) 0 50% no-repeat;
+      background-size: auto;
+  background-size: contain;
+
+  height: 2.2rem;
+  display: block;
+  margin: 0 .25rem .5rem;
+}
+.navbar-brand {
+  padding-top: .33594rem;
+  padding-bottom: .33594rem;
+  margin-right: 1rem;
+  font-size: 1.09375rem;
+  line-height: inherit;
+  white-space: nowrap;
+}
+
+
+#login .card-body.card-body-logo .logo {
+  background: url(../images/logo.png) 50% 50% no-repeat;
+  height:92.89px;
+  width: 332.61px;
+  margin-bottom: 1rem;
+}
+
+
+#login {
+  background: #fcfcfc !important;
+  background-size: cover;
+  margin: 0;
+}
+
+
+.btn-primary {
+  color: #ffffff;
+  background-color: #096c07;
+  border-color: #350459;
+}
+
+
+.btn-primary:hover{
+  color: #350459;
+  background-color: #fff;
+  border-color: #350459;
+}
+
+
+
+
+
+
+
+.navbar.main-nav {
+  background: #fcfcfc;
+}
+
+
+.banner {
+  color: #12054e;
+}
+
+.bg-dark{
+  background-color: #096c07  !important;
+}
+
+
+
+li  a.nav-link {
+  color: #cccccc !important;
+}
+
+
+
+
+
+ul.nav.nav-pills li  a.nav-link {
+  color: #000 !important;
+}
+
+
+ul.nav.nav-pills li  a.nav-link.active {
+  color: #fff !important;
+}

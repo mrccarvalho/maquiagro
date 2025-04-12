@@ -1,0 +1,64 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <UserSecretsId>af5d3192-deda-4450-96e7-4c8679e3fbf8</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Index\**" />
+    <Compile Remove="Logs\**" />
+    <EmbeddedResource Remove="Index\**" />
+    <EmbeddedResource Remove="Logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="appsettings.*.json" />
+    <Content Include="appsettings.*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DependentUpon>appsettings.json</DependentUpon>
+    </Content>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="piranha.codebase.db" />
+    <None Remove="piranha.codebase.db-shm" />
+    <None Remove="piranha.codebase.db-wal" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.3.2" />
+    <PackageReference Include="Azure.Identity" Version="1.13.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+    <PackageReference Include="Piranha" Version="11.1.0" />
+    <PackageReference Include="Piranha.AspNetCore" Version="11.1.0" />
+    <PackageReference Include="Piranha.AspNetCore.Identity.SQLite" Version="11.1.0" />
+    <PackageReference Include="Piranha.AspNetCore.Identity.SQLServer" Version="11.1.0" />
+    <PackageReference Include="Piranha.AttributeBuilder" Version="11.1.0" />
+    <PackageReference Include="Piranha.Azure.BlobStorage" Version="11.1.0" />
+    <PackageReference Include="Piranha.Data.EF.SQLite" Version="11.1.0" />
+    <PackageReference Include="Piranha.Data.EF.SQLServer" Version="11.1.0" />
+    <PackageReference Include="Piranha.ImageSharp" Version="11.1.0" />
+    <PackageReference Include="Piranha.Local.FileStorage" Version="11.1.0" />
+    <PackageReference Include="Piranha.Manager" Version="11.1.0" />
+    <PackageReference Include="Piranha.Manager.TinyMCE" Version="11.1.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Serilog.Sinks.AzureBlobStorage" Version="4.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+
+    <ProjectReference Include="..\PiranhaCMS.ContentTypes\PiranhaCMS.ContentTypes.csproj" />
+    <ProjectReference Include="..\PiranhaCMS.ImageCache\PiranhaCMS.ImageCache.csproj" />
+    <ProjectReference Include="..\PiranhaCMS.Search\PiranhaCMS.Search.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
+</Project>

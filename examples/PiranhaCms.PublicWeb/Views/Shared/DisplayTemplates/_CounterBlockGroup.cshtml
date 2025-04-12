@@ -1,0 +1,25 @@
+﻿@model PiranhaCMS.ContentTypes.Blocks._CounterBlockGroup
+
+
+<!-- Counter Section -->
+	<section class="counter-section">
+		<div class="auto-container">
+			<!-- Sec Title Three -->
+			<div class="sec-title-three centered">
+				<div class="title">@Model.SubTitle</div>
+				<h2>@Model.Title</h2>
+			</div>
+			<div class="row clearfix">
+
+				 @if (Model.Items != null && Model.Items.Count > 0)
+                        {
+                            foreach (var item in Model.Items)
+                            {
+                                <partial name="CounterBlock.cshtml" model="@item" />
+                            }
+                        }
+				
+			</div>
+		</div>
+	</section>
+	<!-- End Counter Section -->

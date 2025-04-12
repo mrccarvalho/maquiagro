@@ -1,0 +1,245 @@
+@model  PiranhaCMS.PublicWeb.Models.ViewModels.ProjectsArchivePageViewModel
+@{
+
+    ViewData["Title"] = !string.IsNullOrEmpty(Model.CurrentPage.MetaTitle) ? Model.CurrentPage.MetaTitle :
+
+    Model.CurrentPage.Title;
+    var hasImage = Model.CurrentPage.PrimaryImage.HasValue;
+    var posts = Model.CurrentPage.Archive.Posts.Count;
+    Func<string> newsLink = () =>
+    {
+    return Model.CurrentPage.Permalink
+    + (Model.CurrentPage.Archive.Category != null ? $"/category/{Model.CurrentPage.Archive.Category.Slug}" : "")
+    + (Model.CurrentPage.Archive.Year.HasValue ? $"/{Model.CurrentPage.Archive.Year}" : "")
+    + (Model.CurrentPage.Archive.Month.HasValue ? $"/{Model.CurrentPage.Archive.Month}" : "");
+    };
+}
+
+@{
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+    var SiteLanguage = await WebApp.Api.Languages.GetByIdAsync(site.LanguageId);
+}
+@section head {
+    @WebApp.MetaTags(Model.CurrentPage)
+}
+
+<!-- Page Title -->
+<section class="page-title"  style="background-image:url(@Url.Content(Model.CurrentPage.PrimaryImage)">
+    <div class="auto-container">
+        @Html.Partial("Partial/_BreadCrumb", WebApp.PageId)
+        <h1>@Model.CurrentPage.Title</h1>
+    </div>
+</section>
+<!-- End Page Title -->
+
+<!-- News Section Two -->
+<section class="news-section-two">
+    <div class="auto-container">
+        <div class="sec-title-two">
+          <div class="title">
+              @if(Model.CurrentPage.Archive.Category != null )
+             {
+                    @Model.CurrentPage.Archive.Category.Title
+             } </div>
+            <h2>Projetos</h2>
+
+           
+             
+        </div>
+        @for (var n = 0; n < posts; n += 3)
+
+        {
+                <div class="row">
+            @for (var i = n; i < Math.Min(posts, n + 3); i++)
+
+            {
+
+                var post = Model.CurrentPage.Archive.Posts[i];
+        
+                <div class=" @(i == 0 ? "col-md-4 large-4" : " col-md-4 col-lg-4")">
+                    <!-- News Block Two -->
+                    <div class="news-block-two">
+                        <div class="inner-box wow fadeInLeft">
+                            <div class="image">
+                                   <a href="@post.Permalink"><img src="@Url.Content(post.PrimaryImage)" alt="" /></a>
+                            </div>
+                            <div class="lower-content">
+                                <div class="post-date">  @if (post.IsPublished)
+                                                {
+                                                <span>
+                                                    @Model.CurrentPage.Published.Value.ToString("dd")  @Model.CurrentPage.Published.Value.ToString("MMMM"), @Model.CurrentPage.Published.Value.ToString("yyyy")
+                                                </span>
+                                                } </div>
+                                <h4><a href="@post.Permalink">@post.Title</a></h4>
+                                <a class="plus-icon fa-plus" href="@post.Permalink"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+            }
+              </div>
+        }
+        
+<ul class="pagination m-b0 p-b0">
+    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+</section>
+
+<!-- End News Section Two -->
+
+</div>
+
+
+
+<!-- OUR news END -->
+
+  <!-- OUR BLOG START -->
+            <div class="section-full  p-t80  bg-white blog-post-outer-3 ">
+				<div class="auto-container">
+                
+                	<div class="wt-separator-two-part">
+                    	<div class="row wt-separator-two-part-row">
+                        	<div class="col-lg-8 col-md-7 wt-separator-two-part-left">
+                                <!-- TITLE START-->
+                                <div class="section-head left wt-small-separator-outer">
+                                    <div class="wt-small-separator site-text-primary">
+                                        <div  class="sep-leaf-left"></div>
+                                        <div>Latest Articles Updated Daily</div>
+                                        <div  class="sep-leaf-right"></div>
+                                    </div>
+                                    <h2>We Are Here To Learn You More From Blog</h2>
+                                </div>
+                                <!-- TITLE END-->
+                            </div>
+                            <div class="col-lg-4 col-md-5 wt-separator-two-part-right text-right">
+                            	<a href="blog-grid.html" class="site-button site-btn-effect">More Detail</a>
+                            </div>
+                    	</div>
+                    </div>
+     
+                    <!-- BLOG SECTION START -->
+                    <div class="section-content">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-4 col-md-6 col-sm-12 m-b30">
+                                <!--Block one-->
+                                <div class="blog-post date-style-2">
+                                    <div class="wt-post-media wt-img-effect zoom-slow">
+                                        <a href="javascript:;"><img src="/assets/images/blog/default/thum1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="wt-post-info bg-white p-t30">
+                                        <div class="wt-post-meta ">
+                                            <ul>
+                                                <li class="post-category"><span>Materials</span> </li>
+                                                <li class="post-date">February 28, 2020</li>
+                                                <li class="post-comment">24 Comment</li>
+                                            </ul>
+                                        </div>                                 
+                                        <div class="wt-post-title ">
+                                            <h3 class="post-title">Technology is important for your business, you use technology makes</h3>
+                                        </div>
+                                        <div class="wt-post-readmore ">
+                                            <a href="blog-post-right-sidebar.html" class="site-button-link orange">Read More</a>
+                                        </div>                                        
+                                   </div>                                
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6 col-sm-12 m-b30">
+                                <!--Block two-->
+                                <div class="blog-post date-style-2">
+                                    <div class="wt-post-media wt-img-effect zoom-slow">
+                                        <a href="javascript:;"><img src="/assets/images/blog/default/thum1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="wt-post-info bg-white p-t30">
+                                        <div class="wt-post-meta ">
+                                            <ul>
+                                                <li class="post-category"><span>Technology</span> </li>
+                                                <li class="post-date">February 28, 2020</li>
+                                                <li class="post-comment">24 Comment</li>                                      
+                                            </ul>
+                                        </div>                                  
+                                        <div class="wt-post-title ">
+                                            <h3 class="post-title">Present you with examples of 3 posts from authority websites click</h3>
+                                        </div>
+                                        <div class="wt-post-readmore ">
+                                            <a href="blog-post-right-sidebar.html" class="site-button-link orange">Read More</a>
+                                        </div>                                        
+                                    </div>                                
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6 col-sm-12 m-b30">
+                                <!--Block three-->
+                                <div class="blog-post date-style-2">
+                                    <div class="wt-post-media wt-img-effect zoom-slow">
+                                        <a href="javascript:;"><img src="/assets/images/blog/default/thum1.jpg" alt=""></a>
+                                    </div>
+                                    <div class="wt-post-info bg-white p-t30">
+                                        <div class="wt-post-meta ">
+                                            <ul>
+                                                <li class="post-category"><span>Manufacturing</span> </li>
+                                                <li class="post-date">February 28, 2020</li>
+                                                <li class="post-comment">24 Comment</li>
+                                            </ul>
+                                        </div>                                  
+                                        <div class="wt-post-title ">
+                                            <h3 class="post-title">Explain to you why they work and what makes people click them</h3>
+                                        </div>
+                                        <div class="wt-post-readmore ">
+                                            <a href="blog-post-right-sidebar.html" class="site-button-link orange">Read More</a>
+                                        </div>
+                                    </div>                                
+                                </div> 
+                            </div>                                                        
+                                                        
+                        </div>
+                    </div>
+                </div>
+                
+             </div>   
+            <!-- OUR BLOG END -->
+@foreach (var block in Model.CurrentPage.Blocks)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{
+    <div class="block @block.CssName()">
+        <div class="container">
+            @Html.DisplayFor(m => block, block.GetType().Name)
+        </div>
+    </div>
+
+}

@@ -1,0 +1,71 @@
+@model PiranhaCMS.ContentTypes.Blocks.AboutBlock
+@using PiranhaCMS.ContentTypes.Content
+@using PiranhaCMS.ContentTypes.Regions
+
+
+@{
+	var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+	var about = await WebApp.Api.Content.GetByIdAsync<StandardAbout>(Model.Body.Id.Value, site.LanguageId);
+}
+
+
+<!-- ABOUT SECTION START -->
+<div class="section-full welcome-section-outer">
+    <div class="welcome-section-top bg-white p-t80 p-b50">
+        <div class="auto-container">
+            <div class="row d-flex justify-content-center">
+
+                <div class="col-lg-6 col-md-12 m-b30">
+                    <div class="welcom-to-section">
+                        <!-- TITLE START-->
+                        <div class="left wt-small-separator-outer">
+                            <div class="wt-small-separator site-text-primary">
+                                <div class="sep-leaf-left"></div>
+                               <div class="title">@Model.Title <span class="site-text-secondry">@Model.SubTitle</span></div>
+                                <div class="sep-leaf-right"></div>
+                            </div>
+                        </div>
+                        <h2>@Model.SubTitle2</h2>
+                        <!-- TITLE END-->
+                        <ul class="site-list-style-one">
+                            <li>Quality Control System , 100% Satisfaction Guarantee</li>
+                            <li>Unrivalled Workmanship, Professional and Qualified</li>
+                            <li>Environmental Sensitivity, Personalised Solutions</li>
+                        </ul>
+
+                        <p>Progressively maintain extensive infomediaries via extensible nich. Capitalize on low hanging
+                            fruit. a ballpark value added is activity to beta test. Override the digital divide with
+                            additional click throughs from fruit to identify a ballpark value added.</p>
+
+                        <div class="welcom-to-section-bottom d-flex justify-content-between">
+                            <div class="welcom-btn-position">
+                                <div class="btn-box">
+                                    <a href="@(Model.PageLink != null && Model.PageLink.HasValue ? Url.Content(Model.PageLink.Page.Permalink) : '/' )"
+                                        class="theme-btn btn-style-six clearfix">
+                                        <span class="btn-wrap">
+                                            <span class="text-one">Explore More</span>
+                                            <span class="text-two">Explore More</span>
+                                        </span>
+                                        <span class="plus fa-plus"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12 m-b30">
+                    <div class="img-colarge2">
+                        <div class="colarge-2 slide-right"><img src="assets/images/colarge/s1.jpg" alt=""></div>
+                        <div class="colarge-2-1"><img src="assets/images/colarge/s1.jpg" alt=""></div>
+                        <div class="since-year-outer2">
+                            <div class="since-year2"><span>Since</span><strong>2015</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ABOUT SECTION  SECTION END -->

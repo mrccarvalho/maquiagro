@@ -1,0 +1,21 @@
+@model Guid
+
+
+<nav >
+    <ul class="bread-crumb clearfix">
+          <li><a href="/">Home</a></li>
+        @foreach (var item in WebApp.Site.Sitemap.GetBreadcrumb(WebApp.PageId))
+        {
+        <li >
+            @if (item.Id != WebApp.PageId)
+                {
+            <a href="@item.Permalink">@item.MenuTitle</a>
+                }
+                else
+                {
+            <span> <a href="@item.Permalink">@item.MenuTitle</a></span>
+                }
+        </li>
+        }
+    </ul>
+</nav>

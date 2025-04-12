@@ -1,0 +1,35 @@
+@model PiranhaCMS.PublicWeb.Models.ViewModels.AboutPageViewModel
+
+@{
+
+    ViewBag.Title = Model.CurrentPage.Title;
+}
+@{
+    string originalString = Model.CurrentPage.PageHeader.TopImage;
+    int indexDaPrimeiraBarra = originalString.IndexOf("/");
+
+
+    // Verifica se a barra existe na string
+    if (indexDaPrimeiraBarra != -1)
+    {
+        originalString = originalString.Remove(indexDaPrimeiraBarra, 1); // Remove a primeira barra
+    }
+
+    int indexDoTil = originalString.IndexOf("~");
+    if (indexDoTil != -1)
+    {
+        originalString = originalString.Remove(indexDoTil, 1); // Remove a primeira barra
+    }
+}
+
+<!-- Page Title -->
+<section class="page-title" style="background-image:url(@originalString);">
+    <div class="auto-container">
+        @Html.Partial("Partial/_BreadCrumb", WebApp.PageId)
+        <h1>@Model.CurrentPage.PageHeader.Heading</h1>
+    </div>
+</section>
+<!-- End Page Title -->
+
+
+@Html.DisplayFor(m => m.CurrentPage.Blocks)

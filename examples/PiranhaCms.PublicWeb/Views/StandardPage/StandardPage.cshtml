@@ -1,0 +1,25 @@
+@model PiranhaCMS.PublicWeb.Models.ViewModels.StandardPageViewModel
+
+@{
+
+	ViewBag.Title = Model.CurrentPage.Title;
+}
+
+
+<!-- Page Title -->
+    <section class="page-title" style="background-image: url(assets/images/background/9.jpg)">
+        <div class="auto-container">
+			@Html.Partial("Partial/_BreadCrumb", WebApp.PageId)
+			<h1>@Model.CurrentPage.PageHeader.Heading</h1>
+        </div>
+    </section>
+    <!-- End Page Title -->
+
+
+
+
+<!--Html.Partial("Partial/_BreadCrumb", WebApp.PageId)-->
+
+
+@Html.DisplayFor(m => m.CurrentPage.Blocks)
+

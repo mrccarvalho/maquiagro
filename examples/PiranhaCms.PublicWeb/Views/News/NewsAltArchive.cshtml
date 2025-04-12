@@ -1,0 +1,101 @@
+@model PiranhaCMS.PublicWeb.Models.ViewModels.NewsArchivePageViewModel
+@{
+
+    ViewData["Title"] = !string.IsNullOrEmpty(Model.CurrentPage.MetaTitle) ? Model.CurrentPage.MetaTitle :
+
+    Model.CurrentPage.Title;
+    var hasImage = Model.CurrentPage.PrimaryImage.HasValue;
+    var posts = Model.CurrentPage.Archive.Posts.Count;
+    Func<string> newsLink = () =>
+    {
+    return Model.CurrentPage.Permalink
+    + (Model.CurrentPage.Archive.Category != null ? $"/category/{Model.CurrentPage.Archive.Category.Slug}" : "")
+    + (Model.CurrentPage.Archive.Year.HasValue ? $"/{Model.CurrentPage.Archive.Year}" : "")
+    + (Model.CurrentPage.Archive.Month.HasValue ? $"/{Model.CurrentPage.Archive.Month}" : "");
+    };
+}
+
+@{
+    var site = await WebApp.Api.Sites.GetByIdAsync(WebApp.Site.Id);
+    var SiteLanguage = await WebApp.Api.Languages.GetByIdAsync(site.LanguageId);
+    var myposts = await WebApp.Api.Posts.GetAllAsync(Model.CurrentPage.Id);
+}
+@section head {
+    @WebApp.MetaTags(Model.CurrentPage)
+}
+
+<!-- Page Title -->
+<section class="page-title"  style="background-image:url(@Url.Content(Model.CurrentPage.PrimaryImage)">
+    <div class="auto-container">
+        @Html.Partial("Partial/_BreadCrumb", WebApp.PageId)
+        <h1>@Model.CurrentPage.Title</h1>
+    </div>
+</section>
+<!-- End Page Title -->
+
+<!-- News Section -->
+	<section class="news-section">
+		<div class="pattern-layer" style="background-image:url(images/background/pattern-5.png)"></div>
+		<div class="pattern-layer-two" style="background-image:url(images/background/pattern-6.png)"></div>
+		<div class="pattern-layer-three" style="background-image:url(images/background/pattern-7.png)"></div>
+		<div class="auto-container">
+			<div class="sec-title">
+				<div class="big-text">Blog</div>
+				<div class="title">Latest Blog</div>
+				<h2>Learn something from blog.</h2>
+			</div>
+			<div class="three-item-carousel owl-carousel owl-theme">
+				 
+             
+                  @foreach (var post in myposts)
+                            {
+				<!-- News Detail -->
+				<div class="news-block">
+					<div class="inner-box">
+						<div class="image">
+							<div class="category">@post.Category.Title</div>
+							<img src="@Url.Content(post.PrimaryImage)" alt="" />
+							<div class="overlay-box">
+								<div class="content">
+									<ul class="post-meta">
+										<li><span class="icon flaticon-user-2"></span>by <span class="theme-color"></span>Admin</li>
+										<li><span class="icon flaticon-calendar-2"></span>August 05, 2021 <span class="theme-color"></span></li>
+									</ul>
+									<h5>@post.Title ...</h5>
+								</div>
+							</div>
+							<div class="overlay-box-two">
+								<div class="image-layer" style="background-image:url(@Url.Content(post.PrimaryImage))"></div>
+								<span class="post-date">18th <br> MAY’21</span>
+								<div class="overlay-inner">
+									<div class="overlay-content">
+										<h5><a href="@post.Permalink">@post.Title ...</a></h5>
+										<div class="text">@Html.Raw(@post.Regions.NewsInfos.Description)</div>
+										<a href="@post.Permalink" class="read-more">Read more <span class="flaticon-next-3"></span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+                            }
+
+
+				
+			</div>
+		</div>
+	</section>
+	<!-- End News Section -->
+	
+
+@foreach (var block in Model.CurrentPage.Blocks)
+
+{
+    <div class="block @block.CssName()">
+       
+            @Html.DisplayFor(m => block, block.GetType().Name)
+       
+    </div>
+
+}
